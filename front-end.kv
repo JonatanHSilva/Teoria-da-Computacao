@@ -1,0 +1,418 @@
+<Telas>
+    Menu:
+        name: 'menu'
+    Cadastro1:
+        name: 'cadastro1'
+    Cadastro2:
+        name: 'cadastro2'
+    Cadastro3:
+        name: 'cadastro3'
+    Cadastro4:
+        name: 'cadastro4'
+    Cadastro5:
+        name: 'cadastro5'
+    Simular:
+        name: 'simular'
+
+<Menu>
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 150
+        spacing: 50
+        Tarja:
+            text: 'Simulador de Automatos'
+            size_hint: (1, 2)
+            color: 1, 1, 1, 1
+        Botao:
+            text: 'Criar Automato'
+            on_release: app.root.current = 'cadastro1'
+        Botao:
+            text: 'Simular'
+            on_release: app.root.current = 'simular'
+        Botao:
+            text: 'Sair'
+            on_release: app.stop()
+<Tarja@Label>
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1
+        Rectangle:
+            pos: self.x, self.y
+            size: self.width, self.height
+
+<Simular>:
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title: 'Simular Automato'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
+                #ActionSeparator:
+        BoxLayout:
+            orientation: 'vertical'
+            size: root.width, root.height
+            Image:
+                id: imagem
+                size: root.size
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 100
+                spacing: 50
+                Label:
+                    text: 'Digite a palavra:'
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (1, None)
+                    #width: 100
+                    height: 40
+                TextInput:
+                    id: palavra
+                    focus: True
+                    multiline: False
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (1, None)
+                    #width: 100
+                    height: 40
+                    text_validate_unfocus: False
+                    on_text_validate: root.testar()
+                Botao:
+                    text: 'Testar'
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (1, None)
+                    height: 50
+                    on_release: root.testar()
+            Label:
+                id: mensagemautomato
+                pos_hint: {'center_x': 0.5}
+                size_hint: (1, None)
+                #width: 100
+                height: 40
+            Label:
+                id: mensagemminimizado
+                pos_hint: {'center_x': 0.5}
+                size_hint: (1, None)
+                #width: 100
+                height: 100
+<Cadastro1>:
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            #size: self.width, self.height
+            ActionView:
+                ActionPrevious:
+                    title: 'Criar Automato'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
+                #ActionSeparator:
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 50
+            size: root.width, root.height
+            BoxLayout:
+                pos_hint: {'center_x': 0.5}
+                orientation: 'horizontal'
+                spacing: 50
+                size: root.width, root.height
+                Label:
+                    id: estados
+                    text: 'Digite quantos estados possui o automato:'
+                    color: 1, 1, 1, 1
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (.5, .5)
+                    width: 900
+                    height: 40
+                TextInput:
+                    id: entrada
+                    focus: True
+                    write_tab: False
+                    text: ''
+                    multiline: False
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (None, None)
+                    width: 100
+                    height: 40
+                    text_validate_unfocus: False
+                    on_text_validate: root.validarEstado()
+                Label:
+                    id: aviso1
+                    text: ''
+                    color: 1, 1, 1, 1
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (.2, .5)
+                    width: 200
+                    height: 40
+            BoxLayout:
+                orientation: 'horizontal'
+                pos_hint: {'center_x': 0.5}
+                spacing: 50
+                size: root.width, root.height
+                Label:
+                    id: texto
+                    text: 'Quais são os simbolos do alfabeto?'
+                    color: 1, 1, 1, 1
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (.5, .5)
+                    width: 900
+                    height: 40
+                TextInput:
+                    id: alfabeto
+                    text: ''
+                    multiline: False
+                    write_tab: False
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (None, None)
+                    width: 100
+                    height: 40
+                    text_validate_unfocus: False
+                    on_text_validate: root.validarAlfabeto()
+                Label:
+                    id: aviso2
+                    text: ''
+                    color: 1, 1, 1, 1
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (.2, .5)
+                    width: 200
+                    height: 40
+                    shorten: True
+                    split_str: ' '
+            Botao:
+                id: submit
+                text: 'OK'
+                size_hint: (.5, .2)
+                pos_hint: {'center_x': 0.5}
+                width: 200
+                height: 100
+                on_release: root.validarAlfabeto()
+
+<Cadastro2>:
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title: 'Criar Automato'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
+                #ActionSeparator:
+        BoxLayout:
+            orientation: 'vertical'
+            size: root.width, root.height
+            padding: 100
+            spacing: 50
+            BoxLayout:
+                orientation: 'horizontal'
+                Label:
+                    id: transicoes
+                    text: ''
+                    color: 1, 1, 1, 1
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (.5, None)
+                    width: 400
+                    height: 40
+                TextInput:
+                    id: entrada
+                    text: ''
+                    multiline: False
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (None, None)
+                    focus: True
+                    width: 100
+                    height: 40
+                    on_text_validate: app.root.current = 'cadastro3'
+            Botao:
+                id: submit
+                text: 'OK'
+                size_hint: (.5, None)
+                pos_hint: {'center_x': 0.5}
+                width: 100
+                height: 40
+                on_release: app.root.current = 'cadastro3'
+
+<Cadastro3>:
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title: 'Criar Automato'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
+                #ActionSeparator:
+        BoxLayout:
+            orientation: 'vertical'
+            size: root.width, root.height
+            padding: 100
+            spacing: 50
+            BoxLayout:
+                orientation: 'horizontal'
+                Label:
+                    id: definirtransicao
+                    text: ''
+                    color: 1, 1, 1, 1
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (.5, None)
+                    width: 400
+                    height: 40
+                Spinner:
+                    id: selecao
+                    text: ''
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (None, None)
+                    width: 100
+                    height: 40
+                    text_autoupdate: True
+
+            Botao:
+                id: submit
+                text: 'OK'
+                size_hint: (.5, None)
+                pos_hint: {'center_x': 0.5}
+                width: 200
+                height: 40
+                on_release: root.verificar()
+
+<Cadastro4>:
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title: 'Criar Automato'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
+                #ActionSeparator:
+        BoxLayout:
+            orientation: 'vertical'
+            size: root.width, root.height
+            padding: 100
+            spacing: 50
+            Label:
+                id: inicial
+                text: 'Qual é o estado inicial?'
+                color: 1, 1, 1, 1
+                pos_hint: {'center_x': .5}
+                size_hint: (None, .5)
+                width: 400
+                height: 40
+            GridLayout:
+                id: caixa
+                cols: 1
+                #size_hint: (None, None)
+                #size: root.width, root.height
+            Botao:
+                id: submit
+                text: 'OK'
+                size_hint: (.5, None)
+                pos_hint: {'center_x': 0.5}
+                width: 200
+                height: 40
+                on_release: root.returning()
+
+<Cadastro5>:
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title: 'Criar Automato'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
+                #ActionSeparator:
+        BoxLayout:
+            orientation: 'vertical'
+            size: root.width, root.height
+            padding: 100
+            spacing: 50
+            Label:
+                id: inicial
+                text: 'Qual(is) é(são) o(s) estado(s) final(is)?'
+                color: 1, 1, 1, 1
+                pos_hint: {'center_x': .5}
+                size_hint: (None, .5)
+                width: 400
+                height: 40
+            GridLayout:
+                id: caixa
+                cols: 1
+                #size_hint: (None, None)
+                #size: root.width, root.height
+            Botao:
+                id: submit
+                text: 'OK'
+                size_hint: (.5, None)
+                pos_hint: {'center_x': 0.5}
+                width: 200
+                height: 40
+                on_release: root.returning()
+
+<CheckBInicial>:
+    Label:
+        id: estado
+        #pos_hint: {'center_x': .5}
+    CheckBox:
+        group: 'estados'
+        pos_hint: {'center_x': .1}
+        on_active: root.checkbox(self, self.active)
+
+<CheckBFinal>:
+    Label:
+        id: estado
+        #pos_hint: {'center_x': .5}
+    CheckBox:
+        pos_hint: {'center_x': .1}
+        on_active: root.checkbox(self, self.active)
